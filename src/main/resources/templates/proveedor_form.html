@@ -1,68 +1,69 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Formulario Proveedor - Autotech Garage</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
     <header>
         <div class="container">
             <div class="brand">
-                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <img th:src="@{/images/logo.jpg}" alt="Autotech Garage Logo" class="logo">
                 <h1>Autotech Garage</h1>
             </div>
             <nav class="menu">
-                <a href="clientes.html">Clientes</a>
-                <a href="proveedores.html">Proveedores</a>
-                <a href="productos.html">Productos</a>
-                <a href="ventas.html">Ventas</a>
-                <a href="compras.html">Compras</a>
-                <a href="reportes.html">Reportes</a>
-                <a href="usuarios.html">Usuarios</a>
-                <a href="roles.html">Roles</a>
-                <a href="configuracion.html">Configuración</a>
-                <a href="ayuda.html">Ayuda</a>
-                <a href="login.html">Cerrar Sesión</a>
+                <a th:href="@{/clientes}">Clientes</a>
+                <a th:href="@{/proveedores}">Proveedores</a>
+                <a th:href="@{/productos}">Productos</a>
+                <a th:href="@{/ventas}">Ventas</a>
+                <a th:href="@{/compras}">Compras</a>
+                <a th:href="@{/reportes}">Reportes</a>
+                <a th:href="@{/usuarios}">Usuarios</a>
+                <a th:href="@{/roles}">Roles</a>
+                <a th:href="@{/configuracion}">Configuración</a>
+                <a th:href="@{/ayuda}">Ayuda</a>
+                <a th:href="@{/dashboard}">Inicio</a>
             </nav>
         </div>
     </header>
     <main class="page">
         <div class="container">
             <div class="card">
-                <h2>Formulario Proveedor</h2>
-                <form action="proveedores.html" method="post">
+                <h2 th:text="${proveedor.id} != null ? 'Editar Proveedor' : 'Nuevo Proveedor'"></h2>
+                <form th:action="@{/proveedores}" th:object="${proveedor}" method="post">
+                    <input type="hidden" th:if="*{id}" th:field="*{id}">
                     <div class="form-group">
                         <label for="nombre">Nombre:</label>
-                        <input id="nombre" name="nombre" type="text" placeholder="Nombre completo" required>
+                        <input id="nombre" name="nombre" type="text" placeholder="Nombre completo" th:field="*{nombre}" required>
                     </div>
                     <div class="form-group">
                         <label for="direccion">Dirección:</label>
-                        <input id="direccion" name="direccion" type="text" placeholder="Dirección completa" required>
+                        <input id="direccion" name="direccion" type="text" placeholder="Dirección completa" th:field="*{direccion}" required>
                     </div>
                     <div class="form-group">
                         <label for="telefono">Teléfono:</label>
-                        <input id="telefono" name="telefono" type="tel" placeholder="(503) 7123-4567" required>
+                        <input id="telefono" name="telefono" type="tel" placeholder="(503) 7123-4567" th:field="*{telefono}" required>
                     </div>
                     <div class="form-group">
                         <label for="correo">Correo:</label>
-                        <input id="correo" name="correo" type="email" placeholder="correo@ejemplo.com" required>
+                        <input id="correo" name="correo" type="email" placeholder="correo@ejemplo.com" th:field="*{correo}" required>
                     </div>
                     <div class="form-group">
-                        <label for="condiciones">Condiciones de Pago:</label>
-                        <input id="condiciones" name="condiciones" type="text" placeholder="Ej: 30 días neto" required>
+                        <label for="condicionesPago">Condiciones de Pago:</label>
+                        <input id="condicionesPago" name="condicionesPago" type="text" placeholder="Ej: 30 días neto" th:field="*{condicionesPago}" required>
                     </div>
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="reset" class="btn btn-secondary">Cancelar</button>
+                        <a class="btn btn-secondary" th:href="@{/proveedores}">Cancelar</a>
                     </div>
                 </form>
             </div>
 
             <div class="actions-bottom">
-                <button class="btn btn-secondary" onclick="history.back()">Volver</button>
+                <a class="btn btn-secondary" th:href="@{/proveedores}">Volver</a>
             </div>
         </div>
     </main>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Configuración - Autotech Garage</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
         .toggle-switch {
             position: relative;
@@ -11,13 +11,11 @@
             width: 50px;
             height: 24px;
         }
-
             .toggle-switch input {
                 opacity: 0;
                 width: 0;
                 height: 0;
             }
-
         .slider {
             position: absolute;
             cursor: pointer;
@@ -29,7 +27,6 @@
             transition: var(--trans);
             border-radius: var(--radius);
         }
-
             .slider:before {
                 position: absolute;
                 content: "";
@@ -41,19 +38,15 @@
                 transition: var(--trans);
                 border-radius: 50%;
             }
-
         input:checked + .slider {
             background-color: var(--clr-primary);
         }
-
             input:checked + .slider:before {
                 transform: translateX(26px);
             }
-
         .settings-section {
             margin-bottom: calc(var(--gap) * 2);
         }
-
             .settings-section h3 {
                 margin-bottom: var(--gap);
                 border-bottom: 2px solid var(--clr-accent);
@@ -66,21 +59,21 @@
     <header>
         <div class="container">
             <div class="brand">
-                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <img th:src="@{/images/logo.jpg}" alt="Autotech Garage Logo" class="logo" />
                 <h1>Autotech Garage</h1>
             </div>
             <nav class="menu">
-                <a href="clientes.html">Clientes</a>
-                <a href="proveedores.html">Proveedores</a>
-                <a href="productos.html">Productos</a>
-                <a href="ventas.html">Ventas</a>
-                <a href="compras.html">Compras</a>
-                <a href="reportes.html">Reportes</a>
-                <a href="usuarios.html">Usuarios</a>
-                <a href="roles.html">Roles</a>
-                <a href="configuracion.html">Configuración</a>
-                <a href="ayuda.html">Ayuda</a>
-                <a href="login.html">Cerrar Sesión</a>
+                <a th:href="@{/clientes}">Clientes</a>
+                <a th:href="@{/proveedores}">Proveedores</a>
+                <a th:href="@{/productos}">Productos</a>
+                <a th:href="@{/ventas}">Ventas</a>
+                <a th:href="@{/compras}">Compras</a>
+                <a th:href="@{/reportes}">Reportes</a>
+                <a th:href="@{/usuarios}">Usuarios</a>
+                <a th:href="@{/roles}">Roles</a>
+                <a th:href="@{/configuracion}">Configuración</a>
+                <a th:href="@{/ayuda}">Ayuda</a>
+                <a th:href="@{/dashboard}">Inicio</a>
             </nav>
         </div>
     </header>
@@ -88,7 +81,7 @@
         <div class="container">
             <div class="card">
                 <h2>Configuración del Sistema</h2>
-                <form action="configuracion.html" method="post">
+                <form th:action="@{/configuracion}" method="get">
                     <div class="settings-section">
                         <h3>General</h3>
                         <div class="form-group">
@@ -100,53 +93,39 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="impuesto">Porcentaje de IVA (%):</label>
-                            <input id="impuesto" name="impuesto" type="number" step="0.1" min="0" value="13.0">
+                            <label for="idioma">Idioma:</label>
+                            <select id="idioma" name="idioma">
+                                <option value="es">Español</option>
+                                <option value="en">Inglés</option>
+                            </select>
                         </div>
                     </div>
+
                     <div class="settings-section">
                         <h3>Notificaciones</h3>
-                        <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
-                            <label for="emailNotifs">Email al crear venta:</label>
-                            <label class="toggle-switch">
-                                <input id="emailNotifs" name="emailNotifs" type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
-                            <label for="stockAlerts">Alertas de stock bajo:</label>
-                            <label class="toggle-switch">
-                                <input id="stockAlerts" name="stockAlerts" type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="settings-section">
-                        <h3>Backup y Seguridad</h3>
                         <div class="form-group">
-                            <label for="backupHora">Hora de backup diario:</label>
-                            <input id="backupHora" name="backupHora" type="time" value="02:00">
-                        </div>
-                        <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
-                            <label for="backupAuto">Backup automático:</label>
+                            <label>Alertas de stock bajo</label>
                             <label class="toggle-switch">
-                                <input id="backupAuto" name="backupAuto" type="checkbox" checked>
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Respaldo automático</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
                         </div>
                     </div>
+
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                        <button type="reset" class="btn btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a class="btn btn-secondary" th:href="@{/dashboard}">Cancelar</a>
                     </div>
                 </form>
             </div>
-
-            <div class="actions-bottom">
-                <button class="btn btn-secondary" onclick="location.href='dashboard.html'">Volver</button>
-            </div>
         </div>
     </main>
-
 </body>
 </html>

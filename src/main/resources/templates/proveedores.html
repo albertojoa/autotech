@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Proveedores - Autotech Garage</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <header>
         <div class="container">
             <div class="brand">
-                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <img th:src="@{/images/logo.jpg}" alt="Autotech Garage Logo" class="logo">
                 <h1>Autotech Garage</h1>
             </div>
             <nav class="menu">
-                <a href="clientes.html">Clientes</a>
-                <a href="proveedores.html">Proveedores</a>
-                <a href="productos.html">Productos</a>
-                <a href="ventas.html">Ventas</a>
-                <a href="compras.html">Compras</a>
-                <a href="reportes.html">Reportes</a>
-                <a href="usuarios.html">Usuarios</a>
-                <a href="roles.html">Roles</a>
-                <a href="configuracion.html">Configuración</a>
-                <a href="ayuda.html">Ayuda</a>
-                <a href="login.html">Cerrar Sesión</a>
+                <a th:href="@{/clientes}">Clientes</a>
+                <a th:href="@{/proveedores}">Proveedores</a>
+                <a th:href="@{/productos}">Productos</a>
+                <a th:href="@{/ventas}">Ventas</a>
+                <a th:href="@{/compras}">Compras</a>
+                <a th:href="@{/reportes}">Reportes</a>
+                <a th:href="@{/usuarios}">Usuarios</a>
+                <a th:href="@{/roles}">Roles</a>
+                <a th:href="@{/configuracion}">Configuración</a>
+                <a th:href="@{/ayuda}">Ayuda</a>
+                <a th:href="@{/login}">Cerrar Sesión</a>
             </nav>
         </div>
     </header>
@@ -34,10 +34,7 @@
             <h2>Gestión de Proveedores</h2>
 
             <div class="actions-top">
-                <button class="btn btn-primary"
-                        onclick="window.location.href='proveedor_form.html'">
-                    Nuevo Proveedor
-                </button>
+                <a class="btn btn-primary" th:href="@{/proveedores/nuevo}">Nuevo Proveedor</a>
             </div>
 
             <table>
@@ -53,38 +50,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Proveedor A</td>
-                        <td>Calle 123, San Salvador</td>
-                        <td>(503) 1234-5678</td>
-                        <td>contacto@proveedora.com</td>
-                        <td>30 días neto</td>
+                    <tr th:each="proveedor : ${proveedores}">
+                        <td th:text="${proveedor.id}"></td>
+                        <td th:text="${proveedor.nombre}"></td>
+                        <td th:text="${proveedor.direccion}"></td>
+                        <td th:text="${proveedor.telefono}"></td>
+                        <td th:text="${proveedor.correo}"></td>
+                        <td th:text="${proveedor.condicionesPago}"></td>
                         <td>
-                            <button class="btn btn-secondary">Editar</button>
-                            <button class="btn btn-secondary">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Proveedor B</td>
-                        <td>Avenida 456, Santa Ana</td>
-                        <td>(503) 8765-4321</td>
-                        <td>ventas@proveedorb.com</td>
-                        <td>Contado</td>
-                        <td>
-                            <button class="btn btn-secondary">Editar</button>
-                            <button class="btn btn-secondary">Eliminar</button>
+                            <a class="btn btn-secondary" th:href="@{|/proveedores/${proveedor.id}/editar|}">Editar</a>
+                            <form th:action="@{|/proveedores/${proveedor.id}/eliminar|}" method="post" style="display:inline;">
+                                <button class="btn btn-secondary" type="submit">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="actions-bottom">
-                <button class="btn btn-secondary"
-                        onclick="location.href='dashboard.html'">
-                    Volver
-                </button>
+                <a class="btn btn-secondary" th:href="@{/dashboard}">Volver</a>
             </div>
 
         </div>

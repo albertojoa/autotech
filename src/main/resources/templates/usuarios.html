@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Usuarios - Autotech Garage</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
         .filter-bar {
             margin-top: var(--gap);
@@ -11,13 +11,12 @@
             gap: var(--gap);
             align-items: center;
         }
-
-            .filter-bar input {
-                flex: 1;
-                padding: 0.5rem 1rem;
-                border: 2px solid #ddd;
-                border-radius: var(--radius);
-            }
+        .filter-bar input {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+        }
     </style>
 </head>
 <body>
@@ -25,21 +24,21 @@
     <header>
         <div class="container">
             <div class="brand">
-                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <img th:src="@{/images/logo.jpg}" alt="Autotech Garage Logo" class="logo">
                 <h1>Autotech Garage</h1>
             </div>
             <nav class="menu">
-                <a href="clientes.html">Clientes</a>
-                <a href="proveedores.html">Proveedores</a>
-                <a href="productos.html">Productos</a>
-                <a href="ventas.html">Ventas</a>
-                <a href="compras.html">Compras</a>
-                <a href="reportes.html">Reportes</a>
-                <a href="usuarios.html">Usuarios</a>
-                <a href="roles.html">Roles</a>
-                <a href="configuracion.html">Configuración</a>
-                <a href="ayuda.html">Ayuda</a>
-                <a href="login.html">Cerrar Sesión</a>
+                <a th:href="@{/clientes}">Clientes</a>
+                <a th:href="@{/proveedores}">Proveedores</a>
+                <a th:href="@{/productos}">Productos</a>
+                <a th:href="@{/ventas}">Ventas</a>
+                <a th:href="@{/compras}">Compras</a>
+                <a th:href="@{/reportes}">Reportes</a>
+                <a th:href="@{/usuarios}">Usuarios</a>
+                <a th:href="@{/roles}">Roles</a>
+                <a th:href="@{/configuracion}">Configuración</a>
+                <a th:href="@{/ayuda}">Ayuda</a>
+                <a th:href="@{/dashboard}">Inicio</a>
             </nav>
         </div>
     </header>
@@ -48,49 +47,91 @@
         <div class="container">
             <h1>Gestión de Usuarios</h1>
 
-            <div class="actions-top">
-                <button class="btn btn-secondary">Exportar CSV</button>
-                <button class="btn btn-primary" onclick="location.href='usuario_form.html'">Nuevo Usuario</button>
+            <div class="card">
+                <h3 th:text="${usuario.idUsuario} != null ? 'Editar usuario' : 'Nuevo usuario'"></h3>
+                <form th:action="@{/usuarios}" th:object="${usuario}" method="post">
+                    <input type="hidden" th:if="*{idUsuario}" th:field="*{idUsuario}">
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="correo">Correo</label>
+                            <input id="correo" name="correo" type="email" th:field="*{correo}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombreCompleto">Nombre Completo</label>
+                            <input id="nombreCompleto" name="nombreCompleto" type="text" th:field="*{nombreCompleto}" required>
+                        </div>
+                    </div>
+                    <div class="grid-3">
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input id="password" name="password" type="password" th:field="*{password}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rol">Rol</label>
+                            <input id="rol" name="rol" type="text" th:field="*{rol}" placeholder="Administrador, Vendedor" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <input id="estado" name="estado" type="text" th:field="*{estado}" placeholder="Activo / Inactivo" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a class="btn btn-secondary" th:href="@{/usuarios}">Cancelar</a>
+                    </div>
+                </form>
             </div>
 
             <div class="filter-bar">
                 <label for="searchUser">Buscar:</label>
-                <input id="searchUser" type="text" placeholder="Nombre, correo o rol…">
+                <input id="searchUser" type="text" placeholder="Nombre, correo o rol…" oninput="filtrarTabla(this.value)">
             </div>
 
-            <table>
+            <table id="tablaUsuarios">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Usuario</th>
-                        <th>Nombre Completo</th>
                         <th>Correo</th>
+                        <th>Nombre Completo</th>
                         <th>Rol</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>admin</td>
-                        <td>Administrador General</td>
-                        <td>admin@autotech.com</td>
-                        <td>Administrador</td>
-                        <td>Activo</td>
+                    <tr th:if="${usuarios.isEmpty()}">
+                        <td colspan="6">No hay usuarios registrados</td>
+                    </tr>
+                    <tr th:each="user : ${usuarios}">
+                        <td th:text="${user.idUsuario}"></td>
+                        <td th:text="${user.correo}"></td>
+                        <td th:text="${user.nombreCompleto}"></td>
+                        <td th:text="${user.rol}"></td>
+                        <td th:text="${user.estado}"></td>
                         <td>
-                            <button class="btn btn-secondary">Editar</button>
-                            <button class="btn btn-secondary">Eliminar</button>
+                            <a class="btn btn-secondary" th:href="@{|/usuarios/${user.idUsuario}/editar|}">Editar</a>
+                            <form th:action="@{|/usuarios/${user.idUsuario}/eliminar|}" method="post" style="display:inline;">
+                                <button class="btn btn-secondary" type="submit">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="actions-bottom">
-                <button class="btn btn-secondary" onclick="location.href='dashboard.html'">Volver</button>
+                <a class="btn btn-secondary" th:href="@{/dashboard}">Volver</a>
             </div>
         </div>
     </main>
 
+    <script>
+        function filtrarTabla(valor) {
+            const termino = valor.toLowerCase();
+            document.querySelectorAll('#tablaUsuarios tbody tr').forEach(fila => {
+                const texto = fila.innerText.toLowerCase();
+                fila.style.display = texto.includes(termino) ? '' : 'none';
+            });
+        }
+    </script>
 </body>
 </html>

@@ -1,13 +1,36 @@
-<!DOCTYPE 
-html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Ayuda</title><link rel="stylesheet" href="style.css">
-    </head>
+    <title>Ayuda</title><link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
 <body>
-    <h1>Ayuda y Documentación</h1>
-    <p>Guía de uso...</p>
-    <a href="dashboard.html">Volver</a>
-    </body>
+<header>
+    <div class="container">
+        <div class="brand">
+            <img th:src="@{/images/logo.jpg}" alt="Autotech Garage Logo" class="logo" />
+            <h1>Autotech Garage</h1>
+        </div>
+        <nav class="menu">
+            <a th:href="@{/clientes}">Clientes</a>
+            <a th:href="@{/proveedores}">Proveedores</a>
+            <a th:href="@{/productos}">Productos</a>
+            <a th:href="@{/ventas}">Ventas</a>
+            <a th:href="@{/compras}">Compras</a>
+            <a th:href="@{/reportes}">Reportes</a>
+            <a th:href="@{/usuarios}">Usuarios</a>
+            <a th:href="@{/roles}">Roles</a>
+            <a th:href="@{/configuracion}">Configuración</a>
+            <a th:href="@{/ayuda}">Ayuda</a>
+            <a th:href="@{/dashboard}">Inicio</a>
+        </nav>
+    </div>
+</header>
+<main class="page">
+    <div class="container">
+        <h2>Centro de Ayuda</h2>
+        <p>Si necesitas asistencia, contacta al administrador o revisa la documentación interna.</p>
+    </div>
+</main>
+</body>
 </html>

@@ -1,41 +1,67 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Compras - Autotech Garage</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <header>
         <div class="container">
             <div class="brand">
-                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <img th:src="@{/images/logo.jpg}" alt="Autotech Garage Logo" class="logo">
                 <h1>Autotech Garage</h1>
             </div>
             <nav class="menu">
-                <a href="clientes.html">Clientes</a>
-                <a href="proveedores.html">Proveedores</a>
-                <a href="productos.html">Productos</a>
-                <a href="ventas.html">Ventas</a>
-                <a href="compras.html">Compras</a>
-                <a href="reportes.html">Reportes</a>
-                <a href="usuarios.html">Usuarios</a>
-                <a href="roles.html">Roles</a>
-                <a href="configuracion.html">Configuración</a>
-                <a href="ayuda.html">Ayuda</a>
-                <a href="login.html">Cerrar Sesión</a>
+                <a th:href="@{/clientes}">Clientes</a>
+                <a th:href="@{/proveedores}">Proveedores</a>
+                <a th:href="@{/productos}">Productos</a>
+                <a th:href="@{/ventas}">Ventas</a>
+                <a th:href="@{/compras}">Compras</a>
+                <a th:href="@{/reportes}">Reportes</a>
+                <a th:href="@{/usuarios}">Usuarios</a>
+                <a th:href="@{/roles}">Roles</a>
+                <a th:href="@{/configuracion}">Configuración</a>
+                <a th:href="@{/ayuda}">Ayuda</a>
+                <a th:href="@{/dashboard}">Inicio</a>
             </nav>
         </div>
     </header>
     <main class="page">
         <div class="container">
-            <h2>Gestión de Compras</h2>
             <div class="actions-top">
-                <button class="btn btn-primary"
-                        onclick="window.location.href='compra_form.html'">
-                    Nueva Compra
-                </button>
+                <a class="btn btn-primary" th:href="@{/compras/nuevo}">Nueva Compra</a>
             </div>
+
+            <section class="card">
+                <h2>Filtros</h2>
+                <form method="get" th:action="@{/compras}">
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="fechaInicio">Fecha desde</label>
+                            <input id="fechaInicio" name="fechaInicio" type="date" th:value="${fechaInicio}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaFin">Fecha hasta</label>
+                            <input id="fechaFin" name="fechaFin" type="date" th:value="${fechaFin}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="filtroProveedor">Proveedor</label>
+                            <input id="filtroProveedor" name="filtroProveedor" type="text" placeholder="Nombre del proveedor" th:value="${filtroProveedor}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="filtroItem">Ítem comprado</label>
+                            <input id="filtroItem" name="filtroItem" type="text" placeholder="Nombre o código" th:value="${filtroItem}" />
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                        <a class="btn btn-secondary" th:href="@{/compras}">Limpiar</a>
+                    </div>
+                </form>
+            </section>
+
+            <h2>Gestión de Compras</h2>
             <table>
                 <thead>
                     <tr>
@@ -44,45 +70,34 @@
                         <th>Fecha</th>
                         <th>Ítems</th>
                         <th>Subtotal</th>
-                        <th>Impuesto (13%)</th>
+                        <th>Impuesto</th>
                         <th>Total</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Proveedor A</td>
-                        <td>2025-05-01</td>
-                        <td>Llanta, Pintura</td>
-                        <td>$500.00</td>
-                        <td>$65.00</td>
-                        <td>$565.00</td>
-                        <td>
-                            <button class="btn btn-secondary">Editar</button>
-                            <button class="btn btn-secondary">Eliminar</button>
-                        </td>
+                    <tr th:if="${compras.isEmpty()}">
+                        <td colspan="8">No hay compras registradas</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Proveedor B</td>
-                        <td>2025-05-10</td>
-                        <td>Puerta, Amortiguador</td>
-                        <td>$300.00</td>
-                        <td>$39.00</td>
-                        <td>$339.00</td>
+                    <tr th:each="compra : ${compras}">
+                        <td th:text="${compra.id}"></td>
+                        <td th:text="${compra.proveedor != null ? compra.proveedor.nombre : 'Sin proveedor'}"></td>
+                        <td th:text="${compra.fecha}"></td>
+                        <td th:text="${compra.descripcionItems}"></td>
+                        <td th:text="${compra.subtotal != null ? #numbers.formatDecimal(compra.subtotal,1,'POINT',2,'POINT') : '0.00'}"></td>
+                        <td th:text="${compra.impuesto != null ? #numbers.formatDecimal(compra.impuesto,1,'POINT',2,'POINT') : '0.00'}"></td>
+                        <td th:text="${compra.total != null ? #numbers.formatDecimal(compra.total,1,'POINT',2,'POINT') : '0.00'}"></td>
                         <td>
-                            <button class="btn btn-secondary">Editar</button>
-                            <button class="btn btn-secondary">Eliminar</button>
+                            <a class="btn btn-secondary" th:href="@{|/compras/${compra.id}/editar|}">Editar</a>
+                            <form th:action="@{|/compras/${compra.id}/eliminar|}" method="post" style="display:inline;">
+                                <button class="btn btn-secondary" type="submit">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="actions-bottom">
-                <button class="btn btn-secondary"
-                        onclick="location.href='dashboard.html'">
-                    Volver
-                </button>
+                <a class="btn btn-secondary" th:href="@{/dashboard}">Volver</a>
             </div>
 
         </div>

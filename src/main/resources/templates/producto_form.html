@@ -1,76 +1,81 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Formulario Producto - Autotech Garage</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <header>
         <div class="container">
             <div class="brand">
-                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <img th:src="@{/images/logo.jpg}" alt="Autotech Garage Logo" class="logo">
                 <h1>Autotech Garage</h1>
             </div>
             <nav class="menu">
-                <a href="clientes.html">Clientes</a>
-                <a href="proveedores.html">Proveedores</a>
-                <a href="productos.html">Productos</a>
-                <a href="ventas.html">Ventas</a>
-                <a href="compras.html">Compras</a>
-                <a href="reportes.html">Reportes</a>
-                <a href="usuarios.html">Usuarios</a>
-                <a href="roles.html">Roles</a>
-                <a href="configuracion.html">Configuración</a>
-                <a href="ayuda.html">Ayuda</a>
-                <a href="login.html">Cerrar Sesión</a>
+                <a th:href="@{/clientes}">Clientes</a>
+                <a th:href="@{/proveedores}">Proveedores</a>
+                <a th:href="@{/productos}">Productos</a>
+                <a th:href="@{/ventas}">Ventas</a>
+                <a th:href="@{/compras}">Compras</a>
+                <a th:href="@{/reportes}">Reportes</a>
+                <a th:href="@{/usuarios}">Usuarios</a>
+                <a th:href="@{/roles}">Roles</a>
+                <a th:href="@{/configuracion}">Configuración</a>
+                <a th:href="@{/ayuda}">Ayuda</a>
+                <a th:href="@{/dashboard}">Inicio</a>
             </nav>
         </div>
     </header>
+
     <main class="page">
         <div class="container">
             <div class="card">
-                <h2>Formulario Producto</h2>
-                <form action="productos.html" method="post">
-                    <div class="form-group">
-                        <label for="nombre">Nombre:</label>
-                        <input id="nombre" name="nombre" type="text" placeholder="Nombre del producto" required>
+                <h2 th:text="${producto.id} != null ? 'Editar Producto' : 'Nuevo Producto'"></h2>
+                <form th:action="@{/productos}" th:object="${producto}" method="post">
+                    <input type="hidden" th:if="*{id}" th:field="*{id}">
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input id="nombre" name="nombre" type="text" th:field="*{nombre}" placeholder="Nombre del producto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria">Categoría:</label>
+                            <input id="categoria" name="categoria" type="text" th:field="*{categoria}" placeholder="Categoría" required>
+                        </div>
                     </div>
+
                     <div class="form-group">
                         <label for="descripcion">Descripción:</label>
-                        <input id="descripcion" name="descripcion" type="text" placeholder="Descripción breve">
+                        <textarea id="descripcion" th:field="*{descripcion}" placeholder="Detalles del producto"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="stock">Stock:</label>
-                        <input id="stock" name="stock" type="number" min="0" value="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="precio">Precio Unitario:</label>
-                        <input id="precio" name="precio" type="number" step="0.01" min="0" value="0.00" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="categoria">Categoría:</label>
-                        <input id="categoria" name="categoria" type="text" placeholder="Categoría del producto">
-                    </div>
-                    <div class="form-group">
-                        <label for="marca">Marca:</label>
-                        <input id="marca" name="marca" type="text" placeholder="Marca del producto">
+
+                    <div class="grid-3">
+                        <div class="form-group">
+                            <label for="marca">Marca:</label>
+                            <input id="marca" name="marca" type="text" th:field="*{marca}" placeholder="Marca">
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Stock:</label>
+                            <input id="stock" name="stock" type="number" min="0" th:field="*{stock}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="precioUnitario">Precio Unitario:</label>
+                            <input id="precioUnitario" name="precioUnitario" type="number" step="0.01" min="0" th:field="*{precioUnitario}" required>
+                        </div>
                     </div>
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="reset" class="btn btn-secondary">Cancelar</button>
+                        <a class="btn btn-secondary" th:href="@{/productos}">Cancelar</a>
                     </div>
                 </form>
             </div>
 
             <div class="actions-bottom">
-                <button class="btn btn-secondary" onclick="history.back()">
-                    Volver
-                </button>
+                <a class="btn btn-secondary" th:href="@{/productos}">Volver</a>
             </div>
         </div>
     </main>
-
 </body>
 </html>

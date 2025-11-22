@@ -1,240 +1,68 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <title>Gestión de Ventas</title>
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      :root {
-        --clr-info: #17a2b8;
-        --clr-success: #28a745;
-        --clr-button-text-light: #ffffff;
-      }
-
-      .actions-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: var(--gap);
-        margin-bottom: calc(
-          var(--gap) * 1.5
-        );
-      }
-
-      .main-actions,
-      .export-actions {
-        display: flex;
-        gap: var(--gap);
-        flex-wrap: wrap;
-      }
-
-      .filters-section {
-        background: var(--clr-surface);
-        padding: var(--gap);
-        border-radius: var(--radius);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        margin-bottom: calc(var(--gap) * 1.5);
-      }
-
-      .filters-section h4 {
-        margin-bottom: var(
-          --gap
-        );
-      }
-
-      .filter-grid {
-        display: grid;
-        grid-template-columns: repeat(
-          auto-fit,
-          minmax(220px, 1fr)
-        );
-        gap: var(--gap);
-      }
-
-      .filter-group {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .filter-group label {
-        font-size: 0.9rem;
-        color: var(--clr-text);
-        margin-bottom: 0.4rem;
-      }
-
-      .filter-group input[type="date"],
-      .filter-group input[type="text"],
-      .filter-group input[type="number"] {
-        padding: 0.6rem 0.8rem;
-      }
-
-      .filter-buttons {
-        display: flex;
-        gap: var(--gap);
-        justify-content: flex-start;
-        margin-top: var(--gap);
-      }
-
-      .btn-sm {
-        min-width: auto;
-        padding: 0.4rem 0.8rem;
-        font-size: 0.85rem;
-      }
-
-      
-      @media (max-width: 768px) {
-        .actions-bar {
-          flex-direction: column;
-          align-items: stretch;
-        }
-
-        .main-actions,
-        .export-actions {
-          width: 100%;
-          justify-content: flex-start;
-        }
-        .export-actions button,
-        .main-actions button {
-          flex-grow: 1;
-          text-align: center;
-        }
-
-        .filter-buttons {
-          flex-direction: column;
-        }
-
-        .filter-buttons .btn {
-          width: 100%;
-          margin-bottom: 0.5rem;
-        }
-        .filter-buttons .btn:last-child {
-          margin-bottom: 0;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .export-actions {
-          flex-direction: column;
-        }
-        .export-actions button {
-          width: 100%;
-          margin-bottom: 0.5rem;
-        }
-        .export-actions button:last-child {
-          margin-bottom: 0;
-        }
-      }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
   </head>
   <body>
     <header>
       <div class="container">
         <div class="brand">
-          <img src="logo.jpg" alt="Autotech Garage Logo" class="logo" />
+          <img th:src="@{/images/logo.jpg}" alt="Autotech Garage Logo" class="logo" />
           <h1>Autotech Garage</h1>
         </div>
         <nav class="menu">
-          <a href="clientes.html">Clientes</a>
-          <a href="proveedores.html">Proveedores</a>
-          <a href="productos.html">Productos</a>
-          <a href="ventas.html">Ventas</a>
-          <a href="compras.html">Compras</a>
-          <a href="reportes.html">Reportes</a>
-          <a href="usuarios.html">Usuarios</a>
-          <a href="roles.html">Roles</a>
-          <a href="configuracion.html">Configuración</a>
-          <a href="ayuda.html">Ayuda</a>
-          <a href="login.html">Cerrar Sesión</a>
+          <a th:href="@{/clientes}">Clientes</a>
+          <a th:href="@{/proveedores}">Proveedores</a>
+          <a th:href="@{/productos}">Productos</a>
+          <a th:href="@{/ventas}">Ventas</a>
+          <a th:href="@{/compras}">Compras</a>
+          <a th:href="@{/reportes}">Reportes</a>
+          <a th:href="@{/usuarios}">Usuarios</a>
+          <a th:href="@{/roles}">Roles</a>
+          <a th:href="@{/configuracion}">Configuración</a>
+          <a th:href="@{/ayuda}">Ayuda</a>
+          <a th:href="@{/dashboard}">Inicio</a>
         </nav>
       </div>
     </header>
 
     <main class="page">
       <div class="container">
-        <h2>Gestión y Reporte de Ventas</h2>
-
-        <div class="actions-bar">
-          <div class="main-actions">
-            <button
-              class="btn btn-primary"
-              onclick="window.location.href='venta_form.html'"
-            >
-              Nueva Venta
-            </button>
-          </div>
-          <div class="export-actions">
-            <button class="btn btn btn-secondary" id="exportPdfBtn">
-              Exportar a PDF
-            </button>
-            <button class="btn btn btn-secondary" id="exportExcelBtn">
-              Exportar a Excel
-            </button>
-          </div>
+        <div class="actions-top">
+          <a class="btn btn-primary" th:href="@{/ventas/nuevo}">Nueva Venta</a>
         </div>
 
-        <div class="filters-section">
-          <h4>Filtrar Reporte Por:</h4>
-          <form id="filtersForm">
-            <div class="filter-grid">
-              <div class="filter-group">
-                <label for="fechaInicio">Fecha Desde:</label>
-                <input type="date" id="fechaInicio" name="fechaInicio" />
+        <section class="card">
+          <h2>Filtros</h2>
+          <form method="get" th:action="@{/ventas}">
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="fechaInicio">Fecha desde</label>
+                <input id="fechaInicio" name="fechaInicio" type="date" th:value="${fechaInicio}" />
               </div>
-              <div class="filter-group">
-                <label for="fechaFin">Fecha Hasta:</label>
-                <input type="date" id="fechaFin" name="fechaFin" />
+              <div class="form-group">
+                <label for="fechaFin">Fecha hasta</label>
+                <input id="fechaFin" name="fechaFin" type="date" th:value="${fechaFin}" />
               </div>
-              <div class="filter-group">
-                <label for="filtroCliente">Cliente:</label>
-                <input
-                  type="text"
-                  id="filtroCliente"
-                  name="filtroCliente"
-                  placeholder="Nombre del cliente"
-                />
+              <div class="form-group">
+                <label for="filtroCliente">Cliente</label>
+                <input id="filtroCliente" name="filtroCliente" type="text" placeholder="Nombre del cliente" th:value="${filtroCliente}" />
               </div>
-              <div class="filter-group">
-                <label for="filtroItem">Ítem Vendido:</label>
-                <input
-                  type="text"
-                  id="filtroItem"
-                  name="filtroItem"
-                  placeholder="Nombre o código del ítem"
-                />
-              </div>
-              <div class="filter-group">
-                <label for="montoMin">Monto Mínimo:</label>
-                <input
-                  type="number"
-                  id="montoMin"
-                  name="montoMin"
-                  step="0.01"
-                  placeholder="Ej: 50.00"
-                />
-              </div>
-              <div class="filter-group">
-                <label for="montoMax">Monto Máximo:</label>
-                <input
-                  type="number"
-                  id="montoMax"
-                  name="montoMax"
-                  step="0.01"
-                  placeholder="Ej: 500.00"
-                />
+              <div class="form-group">
+                <label for="filtroItem">Ítem vendido</label>
+                <input id="filtroItem" name="filtroItem" type="text" placeholder="Nombre o código" th:value="${filtroItem}" />
               </div>
             </div>
-            <div class="filter-buttons">
-              <button type="submit" class="btn btn-primary">
-                Aplicar Filtros
-              </button>
-              <button type="reset" class="btn btn-secondary">
-                Limpiar Filtros
-              </button>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+              <a class="btn btn-secondary" th:href="@{/ventas}">Limpiar</a>
             </div>
           </form>
-        </div>
+        </section>
 
+        <h2>Gestión de Ventas</h2>
         <table>
           <thead>
             <tr>
@@ -243,48 +71,35 @@
               <th>Fecha</th>
               <th>Ítems</th>
               <th>Subtotal</th>
-              <th>Impuesto (13%)</th>
+              <th>Impuesto</th>
               <th>Total</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Cliente Ejemplo</td>
-              <td>2025-05-20</td>
-              <td>Filtro de Aceite (2), Bujía (1)</td>
-              <td>$50.00</td>
-              <td>$6.50</td>
-              <td>$56.50</td>
-              <td>
-                <button class="btn btn-secondary btn-sm">Editar</button>
-                <button class="btn btn-secondary btn-sm">Eliminar</button>
-              </td>
+            <tr th:if="${ventas.isEmpty()}">
+              <td colspan="8">No hay ventas registradas</td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Juan Pérez</td>
-              <td>2025-05-21</td>
-              <td>Pastillas de freno (4)</td>
-              <td>$80.00</td>
-              <td>$10.40</td>
-              <td>$90.40</td>
+            <tr th:each="venta : ${ventas}">
+              <td th:text="${venta.id}"></td>
+              <td th:text="${venta.cliente != null ? venta.cliente.nombre : 'Sin cliente'}"></td>
+              <td th:text="${venta.fecha}"></td>
+              <td th:text="${venta.descripcionItems}"></td>
+              <td th:text="${venta.subtotal != null ? #numbers.formatDecimal(venta.subtotal, 1, 'POINT', 2, 'POINT') : '0.00'}"></td>
+              <td th:text="${venta.impuesto != null ? #numbers.formatDecimal(venta.impuesto, 1, 'POINT', 2, 'POINT') : '0.00'}"></td>
+              <td th:text="${venta.total != null ? #numbers.formatDecimal(venta.total, 1, 'POINT', 2, 'POINT') : '0.00'}"></td>
               <td>
-                <button class="btn btn-secondary btn-sm">Editar</button>
-                <button class="btn btn-secondary btn-sm">Eliminar</button>
+                <a class="btn btn-secondary" th:href="@{|/ventas/${venta.id}/editar|}">Editar</a>
+                <form th:action="@{|/ventas/${venta.id}/eliminar|}" method="post" style="display:inline;">
+                  <button class="btn btn-secondary" type="submit">Eliminar</button>
+                </form>
               </td>
             </tr>
           </tbody>
         </table>
 
         <div class="actions-bottom">
-          <button
-            class="btn btn-secondary"
-            onclick="location.href='dashboard.html'"
-          >
-            Volver
-          </button>
+          <a class="btn btn-secondary" th:href="@{/dashboard}">Volver</a>
         </div>
       </div>
     </main>
