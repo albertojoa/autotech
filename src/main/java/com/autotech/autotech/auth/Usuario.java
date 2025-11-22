@@ -17,6 +17,15 @@ public class Usuario {
     @Column(name = "password", nullable = false, length = 255)
     private String password;
 
+    @Column(name = "nombre_completo", length = 200)
+    private String nombreCompleto;
+
+    @Column(length = 100)
+    private String rol;
+
+    @Column(length = 20)
+    private String estado;
+
     // getters y setters
     public Long getIdUsuario() { return idUsuario; }
     public void setIdUsuario(Long idUsuario) { this.idUsuario = idUsuario; }
@@ -26,4 +35,13 @@ public class Usuario {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public String getNombreCompleto() { return nombreCompleto; }
+    public void setNombreCompleto(String nombreCompleto) { this.nombreCompleto = nombreCompleto; }
+
+    public String getRol() { return rol; }
+    public void setRol(String rol) { this.rol = rol; }
+
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 }

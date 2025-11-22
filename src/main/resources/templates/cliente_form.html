@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Formulario Cliente - Autotech Garage</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
     <header>
         <div class="container">
             <div class="brand">
-                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <img th:src="@{/images/logo.jpg}" alt="Autotech Garage Logo" class="logo">
                 <h1>Autotech Garage</h1>
             </div>
             <nav class="menu">
-                <a href="clientes.html">Clientes</a>
-                <a href="proveedores.html">Proveedores</a>
-                <a href="productos.html">Productos</a>
-                <a href="ventas.html">Ventas</a>
-                <a href="compras.html">Compras</a>
-                <a href="reportes.html">Reportes</a>
-                <a href="usuarios.html">Usuarios</a>
-                <a href="roles.html">Roles</a>
-                <a href="configuracion.html">Configuración</a>
-                <a href="ayuda.html">Ayuda</a>
-                <a href="login.html">Cerrar Sesión</a>
+                <a th:href="@{/clientes}">Clientes</a>
+                <a th:href="@{/proveedores}">Proveedores</a>
+                <a th:href="@{/productos}">Productos</a>
+                <a th:href="@{/ventas}">Ventas</a>
+                <a th:href="@{/compras}">Compras</a>
+                <a th:href="@{/reportes}">Reportes</a>
+                <a th:href="@{/usuarios}">Usuarios</a>
+                <a th:href="@{/roles}">Roles</a>
+                <a th:href="@{/configuracion}">Configuración</a>
+                <a th:href="@{/ayuda}">Ayuda</a>
+                <a th:href="@{/login}">Cerrar Sesión</a>
             </nav>
         </div>
     </header>
@@ -32,46 +32,47 @@
     <main class="page">
         <div class="container">
             <div class="card">
-                <h2>Formulario Cliente</h2>
-                <form action="clientes.html" method="post">
+                <h2 th:text="${cliente.id} != null ? 'Editar Cliente' : 'Nuevo Cliente'"></h2>
+                <form th:action="@{/clientes}" th:object="${cliente}" method="post">
+                    <input type="hidden" th:if="*{id}" th:field="*{id}">
                     <div class="form-group">
                         <label for="nombre">Nombre:</label>
-                        <input id="nombre" name="nombre" type="text" placeholder="Nombre completo" required>
+                        <input id="nombre" name="nombre" type="text" placeholder="Nombre completo" th:field="*{nombre}" required>
                     </div>
                     <div class="form-group">
                         <label for="direccion">Dirección:</label>
-                        <input id="direccion" name="direccion" type="text" placeholder="Dirección completa" required>
+                        <input id="direccion" name="direccion" type="text" placeholder="Dirección completa" th:field="*{direccion}" required>
                     </div>
                     <div class="form-group">
                         <label for="telefono">Teléfono:</label>
-                        <input id="telefono" name="telefono" type="tel" placeholder="(503) 7123-4567" required>
+                        <input id="telefono" name="telefono" type="tel" placeholder="(503) 7123-4567" th:field="*{telefono}" required>
                     </div>
                     <div class="form-group">
                         <label for="correo">Correo:</label>
-                        <input id="correo" name="correo" type="email" placeholder="correo@ejemplo.com" required>
+                        <input id="correo" name="correo" type="email" placeholder="correo@ejemplo.com" th:field="*{correo}" required>
                     </div>
                     <div class="form-group">
                         <label for="nit">NIT:</label>
-                        <input id="nit" name="nit" type="text" placeholder="0000-000000-000-0" required>
+                        <input id="nit" name="nit" type="text" placeholder="0000-000000-000-0" th:field="*{nit}" required>
                     </div>
                     <div class="form-group">
                         <label for="dui">DUI:</label>
-                        <input id="dui" name="dui" type="text" placeholder="00000000-0" required>
+                        <input id="dui" name="dui" type="text" placeholder="00000000-0" th:field="*{dui}" required>
                     </div>
                     <div class="form-group">
                         <label for="nrc">NRC:</label>
-                        <input id="nrc" name="nrc" type="text" placeholder="000000-0" required>
+                        <input id="nrc" name="nrc" type="text" placeholder="000000-0" th:field="*{nrc}" required>
                     </div>
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="button" class="btn btn-secondary" onclick="history.back()">Cancelar</button>
+                        <a class="btn btn-secondary" th:href="@{/clientes}">Cancelar</a>
                     </div>
                 </form>
             </div>
 
             <div class="actions-bottom">
-                <button class="btn btn-secondary" onclick="history.back()">Volver</button>
+                <a class="btn btn-secondary" th:href="@{/clientes}">Volver</a>
             </div>
         </div>
     </main>
