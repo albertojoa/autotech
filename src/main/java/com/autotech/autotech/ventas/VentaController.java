@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,8 +42,6 @@ public class VentaController {
         model.addAttribute("filtroItem", filtroItem);
         model.addAttribute("fechaInicio", fechaInicio);
         model.addAttribute("fechaFin", fechaFin);
-    public String listar(Model model) {
-        model.addAttribute("ventas", ventaRepository.findAll());
         return "ventas";
     }
 
@@ -68,8 +65,8 @@ public class VentaController {
     @PostMapping("/ventas")
     public String guardar(
         @ModelAttribute("venta") Venta venta,
-        @RequestParam("clienteId") Long clienteId,
         BindingResult result,
+        @RequestParam("clienteId") Long clienteId,
         Model model) {
 
         Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
@@ -81,14 +78,6 @@ public class VentaController {
 
         if (result.hasErrors()) {
             cargarFormulario(model, venta);
-            return "venta_form";
-        }
-
-    public String guardar(@ModelAttribute("venta") Venta venta, BindingResult result) {
-        if (venta.getFecha() == null) {
-            venta.setFecha(LocalDate.now());
-        }
-        if (result.hasErrors()) {
             return "venta_form";
         }
         ventaRepository.save(venta);

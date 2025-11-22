@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class UsuarioController {
@@ -46,8 +45,5 @@ public class UsuarioController {
     public String eliminar(@PathVariable Long id) {
         usuarioRepository.deleteById(id);
         return "redirect:/usuarios";
-    }
-        model.addAttribute("usuarios", usuarioRepository.findAll());
-        return "usuarios";
     }
 }
