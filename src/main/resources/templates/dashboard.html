@@ -44,12 +44,12 @@
       <section class="dashboard-metrics">
         <h3>Métricas Clave</h3>
         <div class="dashboard-grid">
-          <div class="card"><h4>Clientes</h4><p class="stat">150</p></div>
-          <div class="card"><h4>Proveedores</h4><p class="stat">45</p></div>
-          <div class="card"><h4>Productos</h4><p class="stat">320</p></div>
-          <div class="card"><h4>Ventas Hoy</h4><p class="stat">25</p></div>
-          <div class="card"><h4>Compras Hoy</h4><p class="stat">10</p></div>
-          <div class="card"><h4>Stock Bajo</h4><p class="stat">8</p></div>
+          <div class="card"><h4>Clientes</h4><p class="stat" th:text="${totalClientes}">0</p></div>
+          <div class="card"><h4>Proveedores</h4><p class="stat" th:text="${totalProveedores}">0</p></div>
+          <div class="card"><h4>Productos</h4><p class="stat" th:text="${totalProductos}">0</p></div>
+          <div class="card"><h4>Ventas Hoy</h4><p class="stat" th:text="${ventasHoy}">0</p></div>
+          <div class="card"><h4>Compras Hoy</h4><p class="stat" th:text="${comprasHoy}">0</p></div>
+          <div class="card"><h4>Stock Bajo</h4><p class="stat" th:text="${stockBajo}">0</p></div>
         </div>
       </section>
     </div>

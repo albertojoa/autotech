@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.autotech.autotech.proveedores.Proveedor;
 
 import com.autotech.autotech.proveedores.ProveedorRepository;
 
@@ -24,6 +27,19 @@ public class CompraController {
     }
 
     @GetMapping("/compras")
+    public String listar(
+        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
+        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin,
+        @RequestParam(required = false) String filtroProveedor,
+        @RequestParam(required = false) String filtroItem,
+        Model model) {
+
+        List<Compra> compras = compraRepository.buscarConFiltros(fechaInicio, fechaFin, filtroProveedor, filtroItem);
+        model.addAttribute("compras", compras);
+        model.addAttribute("filtroProveedor", filtroProveedor);
+        model.addAttribute("filtroItem", filtroItem);
+        model.addAttribute("fechaInicio", fechaInicio);
+        model.addAttribute("fechaFin", fechaFin);
     public String listar(Model model) {
         model.addAttribute("compras", compraRepository.findAll());
         return "compras";
@@ -31,6 +47,7 @@ public class CompraController {
 
     @GetMapping("/compras/nuevo")
     public String nuevo(Model model) {
+        cargarFormulario(model, new Compra());
         model.addAttribute("compra", new Compra());
         model.addAttribute("proveedores", proveedorRepository.findAll());
         return "compra_form";
@@ -39,12 +56,31 @@ public class CompraController {
     @GetMapping("/compras/{id}/editar")
     public String editar(@PathVariable Long id, Model model) {
         Compra compra = compraRepository.findById(id).orElseThrow();
+        cargarFormulario(model, compra);
         model.addAttribute("compra", compra);
         model.addAttribute("proveedores", proveedorRepository.findAll());
         return "compra_form";
     }
 
     @PostMapping("/compras")
+    public String guardar(
+        @ModelAttribute("compra") Compra compra,
+        @RequestParam("proveedorId") Long proveedorId,
+        BindingResult result,
+        Model model) {
+
+        Proveedor proveedor = proveedorRepository.findById(proveedorId).orElse(null);
+        compra.setProveedor(proveedor);
+
+        if (compra.getFecha() == null) {
+            compra.setFecha(LocalDate.now());
+        }
+
+        if (result.hasErrors()) {
+            cargarFormulario(model, compra);
+            return "compra_form";
+        }
+
     public String guardar(@ModelAttribute("compra") Compra compra, BindingResult result) {
         if (compra.getFecha() == null) {
             compra.setFecha(LocalDate.now());
@@ -60,5 +96,12 @@ public class CompraController {
     public String eliminar(@PathVariable Long id) {
         compraRepository.deleteById(id);
         return "redirect:/compras";
+    }
+
+    private void cargarFormulario(Model model, Compra compra) {
+        model.addAttribute("compra", compra);
+        model.addAttribute("proveedores", proveedorRepository.findAll());
+        Long proveedorSeleccionado = compra.getProveedor() != null ? compra.getProveedor().getId() : null;
+        model.addAttribute("proveedorSeleccionado", proveedorSeleccionado);
     }
 }

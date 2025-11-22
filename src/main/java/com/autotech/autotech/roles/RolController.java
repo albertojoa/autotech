@@ -19,6 +19,7 @@ public class RolController {
 
     @GetMapping("/roles")
     public String listar(Model model) {
+        model.addAttribute("rol", new Rol());
         model.addAttribute("roles", rolRepository.findAll());
         return "roles";
     }
@@ -37,6 +38,9 @@ public class RolController {
     }
 
     @PostMapping("/roles")
+    public String guardar(@ModelAttribute("rol") Rol rol, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("roles", rolRepository.findAll());
     public String guardar(@ModelAttribute("rol") Rol rol, BindingResult result) {
         if (result.hasErrors()) {
             return "roles";

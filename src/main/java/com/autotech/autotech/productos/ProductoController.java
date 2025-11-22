@@ -20,6 +20,7 @@ public class ProductoController {
     @GetMapping("/productos")
     public String listar(Model model) {
         model.addAttribute("productos", productoRepository.findAll());
+        model.addAttribute("productosBajoStock", productoRepository.findByStockLessThanEqual(5));
         return "productos";
     }
 
