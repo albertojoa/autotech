@@ -21,4 +21,7 @@ public interface VentaRepository extends JpaRepository<Venta, Long> {
         @Param("fechaFin") LocalDate fechaFin,
         @Param("clienteNombre") String clienteNombre,
         @Param("itemTexto") String itemTexto);
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface VentaRepository extends JpaRepository<Venta, Long> {
 }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.autotech.autotech.clientes.Cliente;
+
 import com.autotech.autotech.clientes.ClienteRepository;
 
 @Controller
@@ -41,12 +43,16 @@ public class VentaController {
         model.addAttribute("filtroItem", filtroItem);
         model.addAttribute("fechaInicio", fechaInicio);
         model.addAttribute("fechaFin", fechaFin);
+    public String listar(Model model) {
+        model.addAttribute("ventas", ventaRepository.findAll());
         return "ventas";
     }
 
     @GetMapping("/ventas/nuevo")
     public String nuevo(Model model) {
         cargarFormulario(model, new Venta());
+        model.addAttribute("venta", new Venta());
+        model.addAttribute("clientes", clienteRepository.findAll());
         return "venta_form";
     }
 
@@ -54,6 +60,8 @@ public class VentaController {
     public String editar(@PathVariable Long id, Model model) {
         Venta venta = ventaRepository.findById(id).orElseThrow();
         cargarFormulario(model, venta);
+        model.addAttribute("venta", venta);
+        model.addAttribute("clientes", clienteRepository.findAll());
         return "venta_form";
     }
 
@@ -76,6 +84,13 @@ public class VentaController {
             return "venta_form";
         }
 
+    public String guardar(@ModelAttribute("venta") Venta venta, BindingResult result) {
+        if (venta.getFecha() == null) {
+            venta.setFecha(LocalDate.now());
+        }
+        if (result.hasErrors()) {
+            return "venta_form";
+        }
         ventaRepository.save(venta);
         return "redirect:/ventas";
     }

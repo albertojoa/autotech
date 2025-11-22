@@ -21,4 +21,7 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
         @Param("fechaFin") LocalDate fechaFin,
         @Param("proveedorNombre") String proveedorNombre,
         @Param("itemTexto") String itemTexto);
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CompraRepository extends JpaRepository<Compra, Long> {
 }

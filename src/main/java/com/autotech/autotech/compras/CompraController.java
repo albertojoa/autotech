@@ -1,9 +1,7 @@
 package com.autotech.autotech.compras;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.autotech.autotech.proveedores.Proveedor;
+
 import com.autotech.autotech.proveedores.ProveedorRepository;
 
 @Controller
@@ -41,12 +40,16 @@ public class CompraController {
         model.addAttribute("filtroItem", filtroItem);
         model.addAttribute("fechaInicio", fechaInicio);
         model.addAttribute("fechaFin", fechaFin);
+    public String listar(Model model) {
+        model.addAttribute("compras", compraRepository.findAll());
         return "compras";
     }
 
     @GetMapping("/compras/nuevo")
     public String nuevo(Model model) {
         cargarFormulario(model, new Compra());
+        model.addAttribute("compra", new Compra());
+        model.addAttribute("proveedores", proveedorRepository.findAll());
         return "compra_form";
     }
 
@@ -54,6 +57,8 @@ public class CompraController {
     public String editar(@PathVariable Long id, Model model) {
         Compra compra = compraRepository.findById(id).orElseThrow();
         cargarFormulario(model, compra);
+        model.addAttribute("compra", compra);
+        model.addAttribute("proveedores", proveedorRepository.findAll());
         return "compra_form";
     }
 
@@ -76,6 +81,13 @@ public class CompraController {
             return "compra_form";
         }
 
+    public String guardar(@ModelAttribute("compra") Compra compra, BindingResult result) {
+        if (compra.getFecha() == null) {
+            compra.setFecha(LocalDate.now());
+        }
+        if (result.hasErrors()) {
+            return "compra_form";
+        }
         compraRepository.save(compra);
         return "redirect:/compras";
     }
