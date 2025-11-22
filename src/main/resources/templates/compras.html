@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Compras - Autotech Garage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="brand">
+                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <h1>Autotech Garage</h1>
+            </div>
+            <nav class="menu">
+                <a href="clientes.html">Clientes</a>
+                <a href="proveedores.html">Proveedores</a>
+                <a href="productos.html">Productos</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="compras.html">Compras</a>
+                <a href="reportes.html">Reportes</a>
+                <a href="usuarios.html">Usuarios</a>
+                <a href="roles.html">Roles</a>
+                <a href="configuracion.html">Configuración</a>
+                <a href="ayuda.html">Ayuda</a>
+                <a href="login.html">Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+    <main class="page">
+        <div class="container">
+            <h2>Gestión de Compras</h2>
+            <div class="actions-top">
+                <button class="btn btn-primary"
+                        onclick="window.location.href='compra_form.html'">
+                    Nueva Compra
+                </button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Proveedor</th>
+                        <th>Fecha</th>
+                        <th>Ítems</th>
+                        <th>Subtotal</th>
+                        <th>Impuesto (13%)</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Proveedor A</td>
+                        <td>2025-05-01</td>
+                        <td>Llanta, Pintura</td>
+                        <td>$500.00</td>
+                        <td>$65.00</td>
+                        <td>$565.00</td>
+                        <td>
+                            <button class="btn btn-secondary">Editar</button>
+                            <button class="btn btn-secondary">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Proveedor B</td>
+                        <td>2025-05-10</td>
+                        <td>Puerta, Amortiguador</td>
+                        <td>$300.00</td>
+                        <td>$39.00</td>
+                        <td>$339.00</td>
+                        <td>
+                            <button class="btn btn-secondary">Editar</button>
+                            <button class="btn btn-secondary">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="actions-bottom">
+                <button class="btn btn-secondary"
+                        onclick="location.href='dashboard.html'">
+                    Volver
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>

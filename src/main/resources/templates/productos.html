@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Productos - Autotech Garage</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .stock-bajo {
+            background-color: #ffe5e5;
+            color: #b30000;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="brand">
+                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <h1>Autotech Garage</h1>
+            </div>
+            <nav class="menu">
+                <a href="clientes.html">Clientes</a>
+                <a href="proveedores.html">Proveedores</a>
+                <a href="productos.html">Productos</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="compras.html">Compras</a>
+                <a href="reportes.html">Reportes</a>
+                <a href="usuarios.html">Usuarios</a>
+                <a href="roles.html">Roles</a>
+                <a href="configuracion.html">Configuración</a>
+                <a href="ayuda.html">Ayuda</a>
+                <a href="login.html">Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page">
+        <div class="container">
+            <h2>Gestión de Productos</h2>
+
+            <div class="actions-top">
+                <button class="btn btn-primary"
+                        onclick="window.location.href='producto_form.html'">
+                    Nuevo Producto
+                </button>
+
+                
+                <a href="#stock-bajo" class="btn btn-secondary"> Ver productos con bajo stock</a>
+            </div>
+
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Stock</th>
+                        <th>Precio Unitario</th>
+                        <th>Categoría</th>
+                        <th>Marca</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Filtro de Aceite</td>
+                        <td>Filtro estándar para motor 1.6L</td>
+                        <td>3</td> <!-- stock bajo -->
+                        <td>$8.99</td>
+                        <td>Filtro</td>
+                        <td>Bosch</td>
+                        <td>
+                            <button class="btn btn-secondary">Editar</button>
+                            <button class="btn btn-secondary">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Bujía</td>
+                        <td>Bujía iridio de alta Gama</td>
+                        <td>200</td>
+                        <td>$3.50</td>
+                        <td>Ignición</td>
+                        <td>NGK</td>
+                        <td>
+                            <button class="btn btn-secondary">Editar</button>
+                            <button class="btn btn-secondary">Eliminar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Pastillas de freno</td>
+                        <td>Delanteras estándar</td>
+                        <td>2</td> 
+                        <td>$12.75</td>
+                        <td>Frenos</td>
+                        <td>TRW</td>
+                        <td>
+                            <button class="btn btn-secondary">Editar</button>
+                            <button class="btn btn-secondary">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="actions-bottom">
+                <button class="btn btn-secondary" onclick="location.href='dashboard.html'">
+                    Volver
+                </button>
+            </div>
+
+            
+            <h2 id="stock-bajo">🔴 Productos con Bajo Stock</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Stock Actual</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="stock-bajo">
+                        <td>1</td>
+                        <td>Filtro de Aceite</td>
+                        <td>3</td>
+                        <td>Por debajo del mínimo</td>
+                    </tr>
+                    <tr class="stock-bajo">
+                        <td>3F</td>
+                        <td>Llave nuda</td>
+                        <td>2</td>
+                        <td>Por debajo del mínimo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+</body>
+</html>

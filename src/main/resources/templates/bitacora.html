@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bitácora de Auditoría - Autotech Garage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="brand">
+                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <h1>Autotech Garage</h1>
+            </div>
+            <nav class="menu">
+                <a href="clientes.html">Clientes</a>
+                <a href="proveedores.html">Proveedores</a>
+                <a href="productos.html">Productos</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="compras.html">Compras</a>
+                <a href="reportes.html">Reportes</a>
+                <a href="usuarios.html">Usuarios</a>
+                <a href="roles.html">Roles</a>
+                <a href="configuracion.html">Configuración</a>
+                <a href="ayuda.html">Ayuda</a>
+                <a href="login.html">Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+    <main class="page">
+        <div class="container">
+            <h1> Bitácora de Auditoría</h1>
+
+            <div class="form-actions">
+                <button class="btn btn-primary" onclick="exportarCSV()">📤 Exportar a Almacen</button>
+            </div>
+
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Fecha/Hora</th>
+                        <th>Usuario</th>
+                        <th>Acción</th>
+                        <th>Módulo</th>
+                    </tr>
+                </thead>
+                <tbody id="bitacoraBody"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        const bitacora = [
+            { fecha: "2025-05-25 10:05", usuario: "admin", accion: "Editó producto", modulo: "Inventario" },
+            { fecha: "2025-05-25 10:07", usuario: "Jerrardo", accion: "Realizó venta", modulo: "Ventas" },
+            { fecha: "2025-05-25 10:10", usuario: "admin", accion: "Agregó proveedor", modulo: "Proveedores" }
+        ];
+
+        const cuerpo = document.getElementById("bitacoraBody");
+
+        bitacora.forEach(evento => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${evento.fecha}</td>
+                <td>${evento.usuario}</td>
+                <td>${evento.accion}</td>
+                <td>${evento.modulo}</td>
+              `;
+            cuerpo.appendChild(fila);
+        });
+
+        function exportarCSV() {
+            let csv = "Fecha/Hora,Usuario,Acción,Módulo\n";
+            bitacora.forEach(evento => {
+                csv += `${evento.fecha},${evento.usuario},${evento.accion},${evento.modulo}\n`;
+            });
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "bitacora_auditoria.csv";
+            link.click();
+        }
+    </script>
+</body>
+</html>

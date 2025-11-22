@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios - Autotech Garage</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .filter-bar {
+            margin-top: var(--gap);
+            display: flex;
+            gap: var(--gap);
+            align-items: center;
+        }
+
+            .filter-bar input {
+                flex: 1;
+                padding: 0.5rem 1rem;
+                border: 2px solid #ddd;
+                border-radius: var(--radius);
+            }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="brand">
+                <img src="logo.jpg" alt="Autotech Garage Logo" class="logo">
+                <h1>Autotech Garage</h1>
+            </div>
+            <nav class="menu">
+                <a href="clientes.html">Clientes</a>
+                <a href="proveedores.html">Proveedores</a>
+                <a href="productos.html">Productos</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="compras.html">Compras</a>
+                <a href="reportes.html">Reportes</a>
+                <a href="usuarios.html">Usuarios</a>
+                <a href="roles.html">Roles</a>
+                <a href="configuracion.html">Configuración</a>
+                <a href="ayuda.html">Ayuda</a>
+                <a href="login.html">Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page">
+        <div class="container">
+            <h1>Gestión de Usuarios</h1>
+
+            <div class="actions-top">
+                <button class="btn btn-secondary">Exportar CSV</button>
+                <button class="btn btn-primary" onclick="location.href='usuario_form.html'">Nuevo Usuario</button>
+            </div>
+
+            <div class="filter-bar">
+                <label for="searchUser">Buscar:</label>
+                <input id="searchUser" type="text" placeholder="Nombre, correo o rol…">
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuario</th>
+                        <th>Nombre Completo</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>admin</td>
+                        <td>Administrador General</td>
+                        <td>admin@autotech.com</td>
+                        <td>Administrador</td>
+                        <td>Activo</td>
+                        <td>
+                            <button class="btn btn-secondary">Editar</button>
+                            <button class="btn btn-secondary">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="actions-bottom">
+                <button class="btn btn-secondary" onclick="location.href='dashboard.html'">Volver</button>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
